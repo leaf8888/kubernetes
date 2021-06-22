@@ -1,2 +1,2 @@
-From k8s.gcr.io/ingress-nginx-v3.6.0
+From k8s.gcr.io/ingress-nginx
 MAINTAINER polarwu <1509487314@qq.com>

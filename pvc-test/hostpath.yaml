@@ -1,0 +1,28 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: producer-consumer
+spec:
+  containers:
+  - name: producer
+    image: busybox
+    volumeMounts:
+    - name: shared-volume
+      mountPath: /producer_dir  #容器内的路径
+    args:
+    - /bin/sh
+    - -c
+    - echo "hello world" > /producer_dir/hello.txt; sleep 30000
+  - name: consumer
+    image: busybox
+    volumeMounts:
+    - name: shared-volume
+      mountPath: /consumer_dir
+    args:
+    - /bin/sh
+    - -c
+    - cat /consumer_dir/hello.txt; sleep 30000
+  volumes:
+  - name: shared-volume
+    hostPath:
+      path: "/data/hostPath"

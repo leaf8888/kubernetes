@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptydir-redis
+  labels:
+    volume: emptydir
+  annotations:
+    kubernetes.io/storage: emptyDir
+spec:
+  containers:
+  - name: emptydir-redis
+    image: redis:latest
+    imagePullPolicy: IfNotPresent
+    ports:
+    - name: redis-6379-port
+      protocol: TCP
+      containerPort: 6379
+    volumeMounts:   #将定义的驱动emptydir-redis挂载到容器的/data目录，通过名字方式关联
+    - name: emptydir-redis
+      mountPath: /data
+  volumes:          #定义一个存储，驱动类型为emptyDir，大小1G
+  - name: emptydir-redis
+    emptyDir:
+      sizeLimit: 1Gi
